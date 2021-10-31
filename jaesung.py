@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import pygame
 
 pygame.init() #초기화
