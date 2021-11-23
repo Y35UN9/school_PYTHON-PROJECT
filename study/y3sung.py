@@ -13,7 +13,8 @@ color = (0, 0, 0)
 
 SB = 0
 while SB == 0:
-    clock.trick(60)
+    
+    clock.tick(60)
     # 입력 감지
     for event in pygame.event.get():
          if event.type == pygame.QUIT:
