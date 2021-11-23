@@ -8,5 +8,7 @@ class Ball():
 
     def ranBall(self):
         pass
+
+
     def upSpeed(self):
         pass
