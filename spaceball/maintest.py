@@ -21,13 +21,16 @@ ball = pygame.image.load(voard.board_img[1])                    # 시작화면 B
 
 earth = pygame.image.load(vall.earth_img)                       # class BAll에 있는 지구 이미지
 earth = pygame.transform.scale(earth, (100, 100))               # 사이즈 조절 (지구)
+earth2 = pygame.image.load(vall.earth_img)
+earth2 = pygame.transform.scale(earth, (100, 100))
 
 meteor = pygame.image.load(vall.meteor_img)                     # class BALL에 있는 메테오 이미지
 meteor = pygame.transform.scale(meteor, (140, 140))
 
 earth_pos_x = -1                                                     
 earth_pos_y = 300                                              
-
+earth2_pos_x = -1
+earth2_pos_y = 300
 
 clock = pygame.time.Clock()                                     # 프레임 때문에 
 
@@ -64,8 +67,11 @@ while voard.board_level == 1:
     
     earth_pos_x += 60 * clock.get_time() / vall.ball_speed                                               
     screen.blit(earth,(earth_pos_x,earth_pos_y))
+    earth2_pos_x += 10 * clock.get_time() / vall.ball_speed                        
+    screen.blit(earth2,(earth2_pos_x,earth2_pos_y))
     pygame.display.update()
     screen.fill((0,0,0))
+
 
 
 while voard.board_level == 2:
