@@ -2,6 +2,7 @@ import pygame
 import board
 import ball
 import random
+import time
 
 pygame.init()
 pygame.display.set_caption("spaceball")
@@ -24,6 +25,8 @@ earth = pygame.image.load(vall.earth_img)                       # class BAll에 
 earth = pygame.transform.scale(earth, (100, 100))               # 사이즈 조절 (지구)
 earth2 = pygame.image.load(vall.earth_img)
 earth2 = pygame.transform.scale(earth, (100, 100))
+earth3 = pygame.image.load(vall.earth_img)
+earth3 = pygame.transform.scale(earth, (100, 100))
 
 meteor = pygame.image.load(vall.meteor_img)                     # class BALL에 있는 메테오 이미지
 meteor = pygame.transform.scale(meteor, (140, 140))
@@ -35,6 +38,10 @@ earth_pos_x = -1
 earth_pos_y = 300                                              
 earth2_pos_x = -1
 earth2_pos_y = 300
+earth3_pos_x = -1
+earth3_pos_y = 300
+
+game_time = pygame.time.get_ticks()
 
 clock = pygame.time.Clock()                                     # 프레임 때문에 
 
@@ -67,15 +74,20 @@ while voard.board_level == 1:
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_END:
                 voard.board_level = 4
-    rb = vall.ranBall()
+    running_time = (pygame.time.get_ticks() - game_time) / 1000 +1
     # rball의 개수만큼 랜덤으로 공 출력 반복 ( rball -= 1 을 반복하다가 0이되면 rball 다시 받아오기 )
     screen.blit(checkline,(1020,0))
-    earth_pos_x += 60 * clock.get_time() / vall.ball_speed                                               
+    earth_pos_x += vall.ball_speed                                               
     screen.blit(earth,(earth_pos_x,earth_pos_y))
-    earth2_pos_x += 10 * clock.get_time() / vall.ball_speed                        
+    earth2_pos_x += vall.ball_speed                        
     screen.blit(earth2,(earth2_pos_x,earth2_pos_y))
+    earth3_pos_x += vall.ball_speed                        
+    screen.blit(earth3,(earth3_pos_x,earth3_pos_y))
     pygame.display.update()
     screen.fill((0,0,0))
+    print(running_time)
+    if int(running_time) % 5 == 0: # 30초 단위로 속도 증가
+        vall.upSpeed()
 
 
 
