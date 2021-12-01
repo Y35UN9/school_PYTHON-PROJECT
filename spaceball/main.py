@@ -1,6 +1,7 @@
 import pygame
 import board
 import ball
+import random
 
 pygame.init()
 pygame.display.set_caption("spaceball")
@@ -22,10 +23,10 @@ earth = pygame.image.load(vall.earth_img)                       # class BAll에 
 earth = pygame.transform.scale(earth, (100, 100))               # 사이즈 조절 (지구)
 
 meteor = pygame.image.load(vall.meteor_img)                     # class BALL에 있는 메테오 이미지
-meteor = pygame.transform.scale(meteor, (140, 140))             # 사이즈 조절 (메테오)
+meteor = pygame.transform.scale(meteor, (140, 140))
 
 earth_pos_x = -1                                                     
-earth_pos_y = 555                                               
+earth_pos_y = 300                                              
 
 
 clock = pygame.time.Clock()                                     # 프레임 때문에 
@@ -33,44 +34,44 @@ clock = pygame.time.Clock()                                     # 프레임 때�
 pygame.mixer.init()
 pygame.mixer.music.load(voard.sound[0])
 
-while voard.board_level < 4:
-    pygame.mixer.music.play()
-    clock.tick(100)
-    while voard.board_level == 0:
-        for event in pygame.event.get():
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_SPACE:                          # 스페이스바를 누르면 게임시작(1)
-                    voard.board_level = 1
-                    pygame.mixer.music.stop()
+
+pygame.mixer.music.play()
+clock.tick(100)
+while voard.board_level == 0:
+    for event in pygame.event.get():
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_SPACE:                          # 스페이스바를 누르면 게임시작(1)
+                voard.board_level = 1
+                pygame.mixer.music.stop()
                     
-        screen.blit(space,(555,180))     
-        screen.blit(ball,(555,360)) 
-        pygame.display.update()
+    screen.blit(space,(555,180))     
+    screen.blit(ball,(555,360)) 
+    pygame.display.update()
         
-        if voard.board_level == 1:
-            screen.blit(background, (0,0))
-            pygame.display.flip()
-        
-        
-    while voard.board_level == 1:
-        for event in pygame.event.get():
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_END:
-                    voard.board_level = 4
+    if voard.board_level == 1:
+        screen.blit(background, (0,0))
+        pygame.display.flip()
 
-        earth_pos_x += 60 * clock.get_time() / 1000
-        screen.blit(earth,(earth_pos_x,earth_pos_y))
 
-        pygame.display.update()
+while voard.board_level == 1:
+    for event in pygame.event.get():
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_END:
+                voard.board_level = 4
+
+    earth_pos_x += 60 * clock.get_time() / 1000
+    screen.blit(earth,(earth_pos_x,earth_pos_y))
+    pygame.display.update()
+    screen.fill((0,0,0))
     
 
 
-    while voard.board_level == 2:
-        for event in pygame.event.get():
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_END:
-                    voard.board_level = 4
+while voard.board_level == 2:
+    for event in pygame.event.get():
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_END:
+                voard.board_level = 4
  
-    pygame.display.flip()
+pygame.display.flip()
 
 pygame.quit()
