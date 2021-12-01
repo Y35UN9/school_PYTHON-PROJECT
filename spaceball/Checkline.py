@@ -1,7 +1,7 @@
 import pygame
 
 class Checkline():
-    def __init__ (self,checkline_img,perfect,good):
+    def __init__ (self,perfect,good,checkline_img='image\checkline.png'):
         self.checkline_img = checkline_img
         self.perfect = perfect
         self.good = good

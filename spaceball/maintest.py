@@ -11,6 +11,7 @@ pygame.display.set_caption("spaceball")
 voard = board.Board()  # board 모듈에 Board 클래스를 v(virtual)oard에 저장
 vall = ball.Ball()     # ball 모듇에 Ball 클래스를 v(virtual)all에 저장
 
+
 screen = pygame.display.set_mode([1280,720])                    # 게임화면 가로 세로
 
 background_img = pygame.image.load('image/back_ground.jpg')     # 그냥 검정화면(화면을 초기화 하기 위한 검은색 화면, 덮는 용도임)
@@ -26,6 +27,9 @@ earth2 = pygame.transform.scale(earth, (100, 100))
 
 meteor = pygame.image.load(vall.meteor_img)                     # class BALL에 있는 메테오 이미지
 meteor = pygame.transform.scale(meteor, (140, 140))
+
+checkline = pygame.image.load('image/checkline.png')
+checkline = pygame.transform.scale(checkline,(100,1200))
 
 earth_pos_x = -1                                                     
 earth_pos_y = 300                                              
@@ -43,6 +47,7 @@ pygame.mixer.music.play()
 clock.tick(100)
 while voard.board_level == 0:
     for event in pygame.event.get():
+        
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:                          # 스페이스바를 누르면 게임시작(1)
                 voard.board_level = 1
@@ -64,7 +69,7 @@ while voard.board_level == 1:
                 voard.board_level = 4
     rb = vall.ranBall()
     # rball의 개수만큼 랜덤으로 공 출력 반복 ( rball -= 1 을 반복하다가 0이되면 rball 다시 받아오기 )
-    
+    screen.blit(checkline,(1020,0))
     earth_pos_x += 60 * clock.get_time() / vall.ball_speed                                               
     screen.blit(earth,(earth_pos_x,earth_pos_y))
     earth2_pos_x += 10 * clock.get_time() / vall.ball_speed                        
