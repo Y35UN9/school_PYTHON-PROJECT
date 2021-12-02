@@ -69,10 +69,17 @@ while voard.board_level == 0:
 
 
 while voard.board_level == 1:
+    nextclick_ball = 0
     for event in pygame.event.get():
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_END:
                 voard.board_level = 4
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                print("스페이스바 클릭")
+                #if nextclick_ball == 1:
+                    #if earth_pos_x 
+
     running_time = (pygame.time.get_ticks() - game_time) / 1000 +1
     # rball의 개수만큼 랜덤으로 공 출력 반복 ( rball -= 1 을 반복하다가 0이되면 rball 다시 받아오기 )
     screen.blit(checkline,(1020,0))
@@ -83,12 +90,18 @@ while voard.board_level == 1:
         earth2_pos_x += vall.ball_speed
     pygame.display.update()
     screen.fill((0,0,0))
-    print(running_time)
     if int(running_time) % 5 == 0: # 30초 단위로 속도 증가
         vall.upSpeed()
     
     if  earth_pos_x > 1200 :
         voard.board_level = 2
+    
+    if earth_pos_x > earth2_pos_x:
+        nextclick_ball = 1
+    elif earth2_pos_x > earth3_pos_x:
+        nextclick_ball = 2
+    elif earth3_pos_x > earth_pos_x:
+        nextclick_ball = 3
 
 
 
