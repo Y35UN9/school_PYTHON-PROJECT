@@ -1,17 +1,16 @@
 import pygame
 import board
 import ball
+import checkline
 import random
 import time
 
 pygame.init()
 pygame.display.set_caption("spaceball")
-# pygame.mixer.init()
-# pygame.mixer.pre_init(44100,-16,2,512)
 
 voard = board.Board()  # board 모듈에 Board 클래스를 v(virtual)oard에 저장
 vall = ball.Ball()     # ball 모듇에 Ball 클래스를 v(virtual)all에 저장
-
+vheckline = checkline.Checkline(10, 5)
 
 screen = pygame.display.set_mode([1280,720])                    # 게임화면 가로 세로
 
@@ -31,8 +30,8 @@ earth3 = pygame.transform.scale(earth, (100, 100))
 meteor = pygame.image.load(vall.meteor_img)                     # class BALL에 있는 메테오 이미지
 meteor = pygame.transform.scale(meteor, (140, 140))
 
-checkline = pygame.image.load('image/checkline.png')
-checkline = pygame.transform.scale(checkline,(100,1200))
+checkline = pygame.image.load(vheckline.checkline_img)
+checkline = pygame.transform.scale(checkline,(50,1200))
 
 earth_pos_x = -1                                                     
 earth_pos_y = 300                                              
@@ -79,15 +78,17 @@ while voard.board_level == 1:
     screen.blit(checkline,(1020,0))
     earth_pos_x += vall.ball_speed                                               
     screen.blit(earth,(earth_pos_x,earth_pos_y))
-    earth2_pos_x += vall.ball_speed                        
-    screen.blit(earth2,(earth2_pos_x,earth2_pos_y))
-    earth3_pos_x += vall.ball_speed                        
-    screen.blit(earth3,(earth3_pos_x,earth3_pos_y))
+    if int(running_time) >= 5: # 3초 넘기면 대미지 오브젝트 추가
+        screen.blit(earth2,(earth2_pos_x,earth2_pos_y))
+        earth2_pos_x += vall.ball_speed
     pygame.display.update()
     screen.fill((0,0,0))
     print(running_time)
     if int(running_time) % 5 == 0: # 30초 단위로 속도 증가
         vall.upSpeed()
+    
+    if  earth_pos_x > 1200 :
+        voard.board_level = 2
 
 
 
