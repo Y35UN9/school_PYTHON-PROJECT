@@ -7,9 +7,9 @@ class Ball():
         self.ball_speed = ball_speed
        
     def ranBall(self):
-        rball = random.randint(15,24)
+        rball = random.uniform(1.3, 2)
         return rball
         
     
     def upSpeed(self):
-        self.ball_speed += 0.003
+        self.ball_speed += 0.0001

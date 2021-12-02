@@ -32,6 +32,20 @@ class Checkline():
             elif earth_pos_x >= 950 and earth_pos_x <= 1070:
                 earth_pos_x = -1
                 return self.good
+        elif nextclick_ball == 2:
+            if earth2_pos_x >= 970 and earth2_pos_x <= 1050:
+                earth2_pos_x = -1
+                return self.perfect
+            elif earth2_pos_x >= 950 and earth2_pos_x <= 1070:
+                earth2_pos_x = -1
+                return self.good
+        elif nextclick_ball == 3:
+            if earth2_pos_x >= 970 and earth2_pos_x <= 1050:
+                earth2_pos_x = -1
+                return self.perfect
+            elif earth2_pos_x >= 950 and earth2_pos_x <= 1070:
+                earth2_pos_x = -1
+                return self.good
 
 pygame.init()
 pygame.display.set_caption("spaceball")
@@ -106,13 +120,9 @@ while voard.board_level == 1:
                 vheckline.lineScan()
 
     running_time = (pygame.time.get_ticks() - game_time) / 1000 +1
-    # rball의 개수만큼 랜덤으로 공 출력 반복 ( rball -= 1 을 반복하다가 0이되면 rball 다시 받아오기 )
     screen.blit(checkline,(1020,0))
     earth_pos_x += vall.ball_speed                                               
     screen.blit(earth,(earth_pos_x,earth_pos_y))
-    # if int(running_time) >= 5: # 3초 넘기면 대미지 오브젝트 추가
-    #     screen.blit(earth2,(earth2_pos_x,earth2_pos_y))
-    #     earth2_pos_x += vall.ball_speed
     pygame.display.update()
     screen.fill((0,0,0))
     if int(running_time) % 5 == 0: # 30초 단위로 속도 증가
