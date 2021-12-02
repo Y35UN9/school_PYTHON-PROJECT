@@ -1,16 +1,44 @@
 import pygame
-import board
 import ball
-import checkline
 import random
 import time
+
+class Board:
+    def __init__(self, sound = ['mp3\spaceBall_startBGM.mp3'], board_img = ['image\start_SPACE.jpg','image\start_BALL.jpg'], board_level = 0):
+        self.board_level = board_level
+        self.sound = sound
+        self.board_img = board_img
+
+    def gameOver(self):
+        return self.board_level 
+
+    def soundCheck(self):
+        return self.sound
+
+class Checkline():
+    def __init__ (self,perfect, good,checkline_img='image\checkline.png'):
+        self.checkline_img = checkline_img
+        self.perfect = perfect
+        self.good = good
+
+    def lineScan(self):
+        global earth_pos_x
+        global earth2_pos_x
+        global earth3_pos_x
+        if nextclick_ball == 1:
+            if earth_pos_x >= 970 and earth_pos_x <= 1050:
+                earth_pos_x = -1
+                return self.perfect
+            elif earth_pos_x >= 950 and earth_pos_x <= 1070:
+                earth_pos_x = -1
+                return self.good
 
 pygame.init()
 pygame.display.set_caption("spaceball")
 
-voard = board.Board()  # board 모듈에 Board 클래스를 v(virtual)oard에 저장
-vall = ball.Ball()     # ball 모듇에 Ball 클래스를 v(virtual)all에 저장
-vheckline = checkline.Checkline(10, 5)
+voard = Board()  # board 모듈에 Board 클래스를 v(virtual)oard에 저장
+vall = ball.Ball()
+vheckline = Checkline(10, 5)
 
 screen = pygame.display.set_mode([1280,720])                    # 게임화면 가로 세로
 
@@ -40,14 +68,14 @@ earth2_pos_y = 300
 earth3_pos_x = -1
 earth3_pos_y = 300
 
+nextclick_ball = 0
+
 game_time = pygame.time.get_ticks()
 
 clock = pygame.time.Clock()                                     # 프레임 때문에 
 
 pygame.mixer.init()
 pygame.mixer.music.load(voard.sound[0])
-
-
 
 pygame.mixer.music.play()
 clock.tick(100)
@@ -67,27 +95,24 @@ while voard.board_level == 0:
         screen.blit(background, (0,0))
         pygame.display.flip()
 
-
 while voard.board_level == 1:
-    nextclick_ball = 0
     for event in pygame.event.get():
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_END:
                 voard.board_level = 4
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                print("스페이스바 클릭")
-                #if nextclick_ball == 1:
-                    #if earth_pos_x 
+                nextclick_ball = 1
+                vheckline.lineScan()
 
     running_time = (pygame.time.get_ticks() - game_time) / 1000 +1
     # rball의 개수만큼 랜덤으로 공 출력 반복 ( rball -= 1 을 반복하다가 0이되면 rball 다시 받아오기 )
     screen.blit(checkline,(1020,0))
     earth_pos_x += vall.ball_speed                                               
     screen.blit(earth,(earth_pos_x,earth_pos_y))
-    if int(running_time) >= 5: # 3초 넘기면 대미지 오브젝트 추가
-        screen.blit(earth2,(earth2_pos_x,earth2_pos_y))
-        earth2_pos_x += vall.ball_speed
+    # if int(running_time) >= 5: # 3초 넘기면 대미지 오브젝트 추가
+    #     screen.blit(earth2,(earth2_pos_x,earth2_pos_y))
+    #     earth2_pos_x += vall.ball_speed
     pygame.display.update()
     screen.fill((0,0,0))
     if int(running_time) % 5 == 0: # 30초 단위로 속도 증가

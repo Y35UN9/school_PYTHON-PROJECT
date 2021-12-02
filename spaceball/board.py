@@ -1,5 +1,3 @@
-import pygame
-
 class Board:
     def __init__(self, sound = ['mp3\spaceBall_startBGM.mp3'], board_img = ['image\start_SPACE.jpg','image\start_BALL.jpg'], board_level = 0):
         self.board_level = board_level
