@@ -22,12 +22,18 @@ class Checkline():
         global earth_pos_x
         global click_ball
         global earth_time
-        # if earth_x >= 870 and earth_x <= 850:
-        #     earth_x = -1
-        #     return self.perfect
-        # elif earth_x >= 750 and earth_x <= 870:
-        #     earth_x = -1
-        #     return self.good
+        rm_ball = 0
+        for j in range(len(earth_x)):   
+            if earth_x[rm_ball] < earth_x[j]:
+                rm_ball = j
+        if earth_x[rm_ball] >= 870 and earth_x[rm_ball] <= 850:
+            earth_x[rm_ball] = -1
+            del earth_x[rm_ball]
+            return self.perfect
+        elif earth_x[rm_ball] >= 750 and earth_x[rm_ball] <= 870:
+            earth_x[rm_ball] = -1
+            del earth_x[rm_ball]
+            return self.good
 
 class Ball():
     def __init__(self, ball_speed = 0.25, earth_img = 'image\earth.jpg',meteor_img = 'image\meteor.jpg'):
@@ -110,29 +116,28 @@ while voard.board_level == 1:
     
     running_time = (pygame.time.get_ticks() - game_time) / 1000 +1
     screen.blit(checkline,(820,0))
-    ran = random.uniform(1.3, 2)
+    ran = random.uniform(1, 1.9)
     if time.time() - start > ran:
+        vall.ranBall()
         start = time.time()
         earth_x.append(0)
         i += 1
-        plus_limit = 1
-    if plus_limit == 1:
-        for j in range(len(earth_x)):
-            earth_x[j] += vall.up_Speed()
-        plus_limit = 0
+
+    for j in range(len(earth_x)):
+        earth_x[j] += vall.up_Speed()
 
     vall.ranBall()
     pygame.display.update()
     screen.fill((0,0,0))
 
     if int(running_time) % 5 == 0: # 30초 단위로 속도 증가
-        vall.ball_speed += 1
+        vall.ball_speed += 0.001
     
-    for j in range(i):
+    for j in range(len(earth_x)):
         if  earth_x[j] > 1000:
             voard.board_level = 2
 
-    print(earth_x)
+    print(running_time)
 
 
 while voard.board_level == 2:
