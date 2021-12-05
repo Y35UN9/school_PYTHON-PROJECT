@@ -20,6 +20,8 @@ class Checkline():
                 earth_x[rm_ball] = -1
                 del earth_x[rm_ball]
                 return self.good
+            else:
+                return 0
             if meteor_x >= 750 and meteor_x <= 870:
                 return 0
         except IndexError:
