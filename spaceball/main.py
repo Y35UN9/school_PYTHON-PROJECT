@@ -11,14 +11,19 @@ class Checkline():
         self.good = good
 
     def lineScan(self):
-        if earth_x[rm_ball] >= 785 and earth_x[rm_ball] <= 845:
-            earth_x[rm_ball] = -1
-            del earth_x[rm_ball]
-            return self.perfect
-        elif earth_x[rm_ball] >= 750 and earth_x[rm_ball] <= 870:
-            earth_x[rm_ball] = -1
-            del earth_x[rm_ball]
-            return self.good
+        try:
+            if earth_x[rm_ball] >= 785 and earth_x[rm_ball] <= 845:
+                earth_x[rm_ball] = -1
+                del earth_x[rm_ball]
+                return self.perfect
+            elif earth_x[rm_ball] >= 750 and earth_x[rm_ball] <= 870:
+                earth_x[rm_ball] = -1
+                del earth_x[rm_ball]
+                return self.good
+            if meteor_x >= 750 and meteor_x <= 870:
+                vcore.now_score = 0
+        except IndexError:
+            voard.board_level = 2
 
 class Ball():
     def __init__(self, ball_speed = 0.35, earth_img = 'image\earth.jpg',meteor_img = 'image\meteor.jpg'):
@@ -53,7 +58,6 @@ game_font = pygame.font.Font(None,70)
 press = game_font.render("Please press SPACE BAR!", True, (255,255,255))
 p_or_g =game_font.render("", True, (255,255,255))
 nscore =game_font.render("", True, (255,255,255))
-
 earth = pygame.image.load(vall.earth_img)                       # class BAll에 있는 지구 이미지
 earth = pygame.transform.scale(earth, (100, 100))               # 사이즈 조절 (지구)
 earth_x = [0]
@@ -65,6 +69,8 @@ morescore = 0
 
 meteor = pygame.image.load(vall.meteor_img)                     # class BALL에 있는 메테오 이미지
 meteor = pygame.transform.scale(meteor, (140, 140))
+meteor_x = -1
+random_meteor = random.randint(1, 100)
 
 checkline = pygame.image.load(vheckline.checkline_img)
 checkline = pygame.transform.scale(checkline,(50,1000))
@@ -130,7 +136,13 @@ while voard.board_level <= 2:
             start = time.time()
             earth_x.append(0)
             i += 1
-        #print(rm_ball)
+        if random_meteor == 1:
+            screen.blit(meteor,(meteor_x, 280))
+            meteor_x += 1
+        if meteor_x > 1080 or random_meteor != 1:
+            random_meteor = random.randint(0, 29)
+            meteor_x = -1
+
         for j in range(len(earth_x)):
             earth_x[j] += vall.up_Speed()
 
@@ -142,7 +154,6 @@ while voard.board_level <= 2:
         pygame.display.update()
         screen.fill((0,0,0))
 
-
         if int(running_time) % 10 == 0:
             vall.ball_speed += 0.001
         
@@ -150,27 +161,29 @@ while voard.board_level <= 2:
             if  earth_x[j] > 1000:
                 voard.board_level = 2
 
-        # for j in range(len(earth_x)):   
-        #         if earth_x[rm_ball] < earth_x[j]:
-        #             rm_ball = j
-
     while voard.board_level == 2:
         for event in pygame.event.get():
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_ESCAPE:
                     voard.board_level = 4
                 elif event.key == pygame.K_SPACE:
-                    pygame.init()
-                    earth_x = [0]
+                    earth_x = []
                     screen.blit(background, (0,0))
                     pygame.display.flip()
                     p_or_g =game_font.render("", True, (255,255,255))
                     nscore =game_font.render("", True, (255,255,255))
                     i = 0
-                    rm_ball = 1
+                    rm_ball = 0
                     vcore.now_score = 0
                     morescore = 0
+                    vall.ball_speed = 0.35
                     voard.board_level = 1
+        
+        screen.blit(background, (0,0))
+        screen.blit(scoreboard,(410,190))
+        screen.blit(nscore,(540, 300))
+        screen.blit(bscore,(425, 300))
+        pygame.display.flip()
                 
  
 pygame.display.flip()
