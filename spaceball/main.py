@@ -21,7 +21,7 @@ class Checkline():
                 del earth_x[rm_ball]
                 return self.good
             if meteor_x >= 750 and meteor_x <= 870:
-                vcore.now_score = 0
+                return 0
         except IndexError:
             voard.board_level = 2
 
@@ -98,6 +98,8 @@ while voard.board_level <= 2:
                     voard.board_level = 1
                     start = time.time()
                     pygame.mixer.music.stop()
+                    voard.soundCheck()
+                    pygame.mixer.music.play()
                 elif event.key == pygame.K_ESCAPE:
                     voard.board_level = 4
 
@@ -128,6 +130,8 @@ while voard.board_level <= 2:
                     elif click_score == 5:
                         p_or_g = game_font.render("Good!", True, (255,255,255))
                         morescore = 5
+                    elif click_score == 0:
+                        vcore.now_score = 0
                     nscore = game_font.render("" + str(int(vcore.nowScan(morescore))), True, (255,255,255))
 
         score_font = pygame.font.Font(None,15)
@@ -164,6 +168,7 @@ while voard.board_level <= 2:
         for j in range(len(earth_x)):
             if  earth_x[j] > 1000:
                 voard.board_level = 2
+                pygame.mixer.music.stop()
 
     while voard.board_level == 2:
         for event in pygame.event.get():
@@ -183,7 +188,9 @@ while voard.board_level <= 2:
                     morescore = 0
                     vall.ball_speed = 0.35
                     voard.board_level = 1
-        
+                    pygame.mixer.init()
+                    voard.soundCheck()
+                    pygame.mixer.music.play()
         screen.blit(background, (0,0))
         screen.blit(scoreboard,(410,190))
         screen.blit(nscore,(540, 300))
