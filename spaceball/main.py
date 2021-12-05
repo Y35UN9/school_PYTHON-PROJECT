@@ -58,6 +58,10 @@ game_font = pygame.font.Font(None,70)
 press = game_font.render("Please press SPACE BAR!", True, (255,255,255))
 p_or_g =game_font.render("", True, (255,255,255))
 nscore =game_font.render("", True, (255,255,255))
+restart_font = pygame.font.Font(None,35)
+re_continue = restart_font.render("continue?", True, (255,255,255))
+restart_space = restart_font.render("PRESS SPACE BAR!", True, (255,255,255))
+exit_click = restart_font.render("EXIT - ESC", True, (255,255,255))
 earth = pygame.image.load(vall.earth_img)                       # class BAll에 있는 지구 이미지
 earth = pygame.transform.scale(earth, (100, 100))               # 사이즈 조절 (지구)
 earth_x = [0]
@@ -173,6 +177,7 @@ while voard.board_level <= 2:
                     p_or_g =game_font.render("", True, (255,255,255))
                     nscore =game_font.render("", True, (255,255,255))
                     i = 0
+                    meteor_x = -1
                     rm_ball = 0
                     vcore.now_score = 0
                     morescore = 0
@@ -183,6 +188,9 @@ while voard.board_level <= 2:
         screen.blit(scoreboard,(410,190))
         screen.blit(nscore,(540, 300))
         screen.blit(bscore,(425, 300))
+        screen.blit(re_continue,(480, 450))
+        screen.blit(restart_space,(430, 500))
+        screen.blit(exit_click,(470, 600))
         pygame.display.flip()
                 
  
