@@ -202,6 +202,5 @@ while voard.board_level <= 2:
         screen.blit(exit_click,(470, 600))
         pygame.display.flip()
                 
- 
 pygame.display.flip()
 pygame.quit()

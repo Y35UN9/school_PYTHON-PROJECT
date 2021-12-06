@@ -9,7 +9,7 @@ class Score():
     def nowScan(self, morescore):
         self.now_score += morescore
         return self.now_score
-
+        
     def bestScore(self):
         if self.now_score > self.best_score:
             self.best_score = self.now_score

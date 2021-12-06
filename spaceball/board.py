@@ -5,6 +5,6 @@ class Board:
         self.board_level = board_level
         self.sound = sound
         self.board_img = board_img
-
+        
     def soundCheck(self):
         pygame.mixer.music.load(self.sound[self.board_level])
