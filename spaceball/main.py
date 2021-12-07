@@ -133,6 +133,7 @@ while voard.board_level <= 2:
                         p_or_g = game_font.render("Good!", True, (255,255,255))
                         morescore = 5
                     elif click_score == 0:
+                        morescore = 0
                         vcore.now_score = 0
                     nscore = game_font.render("" + str(int(vcore.nowScan(morescore))), True, (255,255,255))
 
